@@ -71,6 +71,21 @@
                 </thead>
             </table>
         </div>
+        <div id="mostSpreeGameTableContainer" class="col-sm">
+            <h3>Largest Killing Spree</h3>
+            <table id="mostSpreeGameTable" class="table table-hover table-bordered table-sm"
+                data-url="{% url 'mostSpreeGameTable'%}">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Killing Spree</th>
+                        <th>Game</th>
+                        <th>gameID</th>
+                        <th>playerID</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
     </div>
 </div>
 <script src="{%static 'js/leaderboards.js'%}"></script>

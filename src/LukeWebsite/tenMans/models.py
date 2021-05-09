@@ -438,6 +438,23 @@ class Player(models.Model):
                 maxDamage = stat.totalDamageDealtToChampions
         return currentBestStats
 
+    def getHighestSpreeCountGameLaneStats(self, lane):
+        if lane is None:
+            gamesPlayed = GameLaner.objects.filter(player__exact=self.id)
+        else:
+            gamesPlayed = GameLaner.objects.filter(player__exact=lane.id)
+
+        stats = GameLanerStats.objects.filter(gameLaner__in=gamesPlayed)
+
+        maxSpree = -1
+        currentBestStats = None
+        for stat in stats:
+            stat: GameLanerStats
+            if stat.largestKillingSpree > maxSpree:
+                currentBestStats = stat
+                maxSpree = stat.largestKillingSpree
+        return currentBestStats
+
     def __str__(self):
         return self.playerName
 

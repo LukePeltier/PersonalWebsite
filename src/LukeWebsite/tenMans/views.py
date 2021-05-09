@@ -1070,9 +1070,9 @@ class MostDamageGameTable(View):
         data = []
         players = Player.objects.all()
 
-        scores = [player.getHighestAssistCountGameLaneStats(None).totalDamageDealtToChampions for player in players if player.getHighestAssistCountGameLaneStats(None) is not None]
+        scores = [player.getHighestDamageCountGameLaneStats(None).totalDamageDealtToChampions for player in players if player.getHighestDamageCountGameLaneStats(None) is not None]
         names = [player.playerName for player in players]
-        gameIDs = [player.getHighestAssistCountGameLaneStats(None).gameLaner.game.id for player in players if player.getHighestAssistCountGameLaneStats(None) is not None]
+        gameIDs = [player.getHighestDamageCountGameLaneStats(None).gameLaner.game.id for player in players if player.getHighestDamageCountGameLaneStats(None) is not None]
         playerIDs = [player.id for player in players]
 
         leaderboard = sorted(zip(scores, names, gameIDs, playerIDs), reverse=True)[:3]
@@ -1080,6 +1080,31 @@ class MostDamageGameTable(View):
             lineDict = {}
             lineDict['name'] = line[1]
             lineDict['damage'] = line[0]
+            lineDict['gameID'] = line[2]
+            lineDict['playerID'] = line[3]
+            lineDict['game'] = Game.objects.get(pk=line[2]).gameNumber
+            data.append(lineDict)
+
+        return JsonResponse(data={
+            'data': data
+        })
+
+
+class MostSpreeGameTable(View):
+    def get(self, request, *args, **kwargs):
+        data = []
+        players = Player.objects.all()
+
+        scores = [player.getHighestSpreeCountGameLaneStats(None).largestKillingSpree for player in players if player.getHighestSpreeCountGameLaneStats(None) is not None]
+        names = [player.playerName for player in players]
+        gameIDs = [player.getHighestSpreeCountGameLaneStats(None).gameLaner.game.id for player in players if player.getHighestSpreeCountGameLaneStats(None) is not None]
+        playerIDs = [player.id for player in players]
+
+        leaderboard = sorted(zip(scores, names, gameIDs, playerIDs), reverse=True)[:3]
+        for line in leaderboard:
+            lineDict = {}
+            lineDict['name'] = line[1]
+            lineDict['spree'] = line[0]
             lineDict['gameID'] = line[2]
             lineDict['playerID'] = line[3]
             lineDict['game'] = Game.objects.get(pk=line[2]).gameNumber
