@@ -10,7 +10,7 @@
             <h2>Single Game</h2>
         </div>
     </div>
-    <div class="row justify-content-md-center" style="padding-top: 10px;">
+    <div class="row justify-content-center" style="padding-top: 10px;">
         <div id="mostKillsGameTableContainer" class="col-sm">
             <h3>Most Kills</h3>
             <table id="mostKillsGameTable" class="table table-hover table-bordered table-sm"
@@ -94,6 +94,21 @@
                     <tr>
                         <th>Name</th>
                         <th>CS</th>
+                        <th>Game</th>
+                        <th>gameID</th>
+                        <th>playerID</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+        <div id="mostVisionGameTableContainer" class="col-sm">
+            <h3>Most Vision</h3>
+            <table id="mostVisionGameTable" class="table table-hover table-bordered table-sm"
+                data-url="{% url 'mostVisionGameTable'%}">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Vision</th>
                         <th>Game</th>
                         <th>gameID</th>
                         <th>playerID</th>
