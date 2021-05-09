@@ -5,9 +5,14 @@
 {%block content%}
 <div class="container-fluid">
     <h1>Leaderboards</h1>
-    <div class="row justify-content-md-center">
-        <div id="mostKillsGameTableContainer" class="col-2">
-            <h3>Most Kills (One Game)</h3>
+    <div class="row linedheader">
+        <div class="col">
+            <h2>Single Game</h2>
+        </div>
+    </div>
+    <div class="row justify-content-md-center" style="padding-top: 10px;">
+        <div id="mostKillsGameTableContainer" class="col-sm">
+            <h3>Most Kills</h3>
             <table id="mostKillsGameTable" class="table table-hover table-bordered table-sm"
                 data-url="{% url 'mostKillsGameTable'%}">
                 <thead>
@@ -21,8 +26,8 @@
                 </thead>
             </table>
         </div>
-        <div id="mostDeathsGameTableContainer" class="col-2">
-            <h3>Most Deaths (One Game)</h3>
+        <div id="mostDeathsGameTableContainer" class="col-sm">
+            <h3>Most Deaths</h3>
             <table id="mostDeathsGameTable" class="table table-hover table-bordered table-sm"
                 data-url="{% url 'mostDeathsGameTable'%}">
                 <thead>
@@ -36,14 +41,29 @@
                 </thead>
             </table>
         </div>
-        <div id="mostAssistsGameTableContainer" class="col-2">
-            <h3>Most Assists (One Game)</h3>
+        <div id="mostAssistsGameTableContainer" class="col-sm">
+            <h3>Most Assists</h3>
             <table id="mostAssistsGameTable" class="table table-hover table-bordered table-sm"
                 data-url="{% url 'mostAssistsGameTable'%}">
                 <thead>
                     <tr>
                         <th>Name</th>
                         <th>Assists</th>
+                        <th>Game</th>
+                        <th>gameID</th>
+                        <th>playerID</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+        <div id="mostDamageGameTableContainer" class="col-sm">
+            <h3>Most Damage</h3>
+            <table id="mostDamageGameTable" class="table table-hover table-bordered table-sm"
+                data-url="{% url 'mostDamageGameTable'%}">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Damage</th>
                         <th>Game</th>
                         <th>gameID</th>
                         <th>playerID</th>

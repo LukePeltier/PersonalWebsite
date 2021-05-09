@@ -35,3 +35,7 @@ table.dataTable.table-striped.DTFC_Cloned tbody tr:nth-of-type(even) {
 #id-laneMatchupForm{
   width: 15%;
 }
+
+.linedheader{
+  border-bottom: 3px solid #dee2e6;
+}

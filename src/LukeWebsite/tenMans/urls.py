@@ -39,4 +39,5 @@ urlpatterns = [
     path('mostKillsGameTable/', views.MostKillsGameTable.as_view(), name='mostKillsGameTable'),
     path('mostDeathsGameTable/', views.MostDeathsGameTable.as_view(), name='mostDeathsGameTable'),
     path('mostAssistsGameTable/', views.MostAssistsGameTable.as_view(), name='mostAssistsGameTable'),
+    path('mostDamageGameTable/', views.MostDamageGameTable.as_view(), name='mostDamageGameTable'),
 ]
