@@ -1113,3 +1113,28 @@ class MostSpreeGameTable(View):
         return JsonResponse(data={
             'data': data
         })
+
+
+class MostCSGameTable(View):
+    def get(self, request, *args, **kwargs):
+        data = []
+        players = Player.objects.all()
+
+        scores = [player.getHighestCSGameLaneStats(None).getTotalCS() for player in players if player.getHighestCSGameLaneStats(None) is not None]
+        names = [player.playerName for player in players]
+        gameIDs = [player.getHighestCSGameLaneStats(None).gameLaner.game.id for player in players if player.getHighestCSGameLaneStats(None) is not None]
+        playerIDs = [player.id for player in players]
+
+        leaderboard = sorted(zip(scores, names, gameIDs, playerIDs), reverse=True)[:3]
+        for line in leaderboard:
+            lineDict = {}
+            lineDict['name'] = line[1]
+            lineDict['cs'] = line[0]
+            lineDict['gameID'] = line[2]
+            lineDict['playerID'] = line[3]
+            lineDict['game'] = Game.objects.get(pk=line[2]).gameNumber
+            data.append(lineDict)
+
+        return JsonResponse(data={
+            'data': data
+        })

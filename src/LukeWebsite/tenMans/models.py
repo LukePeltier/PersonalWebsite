@@ -455,6 +455,23 @@ class Player(models.Model):
                 maxSpree = stat.largestKillingSpree
         return currentBestStats
 
+    def getHighestCSGameLaneStats(self, lane):
+        if lane is None:
+            gamesPlayed = GameLaner.objects.filter(player__exact=self.id)
+        else:
+            gamesPlayed = GameLaner.objects.filter(player__exact=lane.id)
+
+        stats = GameLanerStats.objects.filter(gameLaner__in=gamesPlayed)
+
+        maxCS = -1
+        currentBestStats = None
+        for stat in stats:
+            stat: GameLanerStats
+            if stat.getTotalCS() > maxCS:
+                currentBestStats = stat
+                maxCS = stat.getTotalCS()
+        return currentBestStats
+
     def __str__(self):
         return self.playerName
 
@@ -651,6 +668,9 @@ class GameLanerStats(models.Model):
 
     csRateFirstTen = models.FloatField()
     csRateSecondTen = models.FloatField()
+
+    def getTotalCS(self):
+        return self.laneMinionsKilled + self.neutralMinionsKilled
 
     def provideStats(localGame, champMap, match: cass.Match):
         for participant in match.participants:

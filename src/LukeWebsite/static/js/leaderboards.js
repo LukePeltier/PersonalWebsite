@@ -200,5 +200,45 @@ $(function () {
             ]
         });
 
+        var mostCSGameTable = $('#mostCSGameTable').DataTable({
+            "ajax": $('#mostCSGameTable').data('url'),
+            "columns": [
+                {
+                    "data": "name",
+                    "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                        $(nTd).html("<a href='/ten_mans/player/" + oData.playerID + "'>" + sData + "</a>");
+                    }
+                },
+
+                {
+                    "data": "cs"
+                },
+                {
+                    "data": "game",
+                    "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                        $(nTd).html("<a href='/ten_mans/game/"+oData.gameID+"'>"+sData+"</a>");
+                    }
+                },
+                {
+                    "data": "gameID"
+                },
+                {
+                    "data": "playerID"
+                }
+            ],
+            columnDefs: [
+                {
+                    targets: [3, 4],
+                    visible: false
+                }
+            ],
+            paging: false,
+            searching: false,
+            info: false,
+            "order": [
+                [1, "desc"]
+            ]
+        });
+
     });
 });

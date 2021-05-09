@@ -41,4 +41,5 @@ urlpatterns = [
     path('mostAssistsGameTable/', views.MostAssistsGameTable.as_view(), name='mostAssistsGameTable'),
     path('mostDamageGameTable/', views.MostDamageGameTable.as_view(), name='mostDamageGameTable'),
     path('mostSpreeGameTable/', views.MostSpreeGameTable.as_view(), name='mostSpreeGameTable'),
+    path('mostCSGameTable/', views.MostCSGameTable.as_view(), name='mostCSGameTable'),
 ]
