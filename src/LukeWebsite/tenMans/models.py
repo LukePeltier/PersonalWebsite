@@ -489,6 +489,23 @@ class Player(models.Model):
                 maxVision = stat.visionScore
         return currentBestStats
 
+    def getHighestControlWardGameLaneStats(self, lane):
+        if lane is None:
+            gamesPlayed = GameLaner.objects.filter(player__exact=self.id)
+        else:
+            gamesPlayed = GameLaner.objects.filter(player__exact=lane.id)
+
+        stats = GameLanerStats.objects.filter(gameLaner__in=gamesPlayed)
+
+        maxCW = -1
+        currentBestStats = None
+        for stat in stats:
+            stat: GameLanerStats
+            if stat.controlWardsPurchased > maxCW:
+                currentBestStats = stat
+                maxCW = stat.controlWardsPurchased
+        return currentBestStats
+
     def __str__(self):
         return self.playerName
 

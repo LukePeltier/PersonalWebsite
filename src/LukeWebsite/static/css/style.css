@@ -39,3 +39,13 @@ table.dataTable.table-striped.DTFC_Cloned tbody tr:nth-of-type(even) {
 .linedheader{
   border-bottom: 3px solid #dee2e6;
 }
+
+.leaderboardTitle{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.leaderboardTitle:hover {
+  overflow: visible;
+}
