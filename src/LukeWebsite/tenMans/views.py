@@ -13,7 +13,7 @@ from django.views.generic.list import ListView
 from tenMans.extras.data import GlobalVars
 from tenMans.forms import (CreatePlayer, DuoForm, LaneMatchup, NewGameForm,
                            UpdateAllGamesForm, UpdateGameForm)
-from tenMans.models import (Champion, Game, GameLaner, GameLanerStats, Lane,
+from tenMans.models import (Champion, Game, GameBan, GameLaner, GameLanerStats, Lane,
                             Player)
 
 
@@ -562,6 +562,58 @@ class RedTeamTable(DetailView):
             playerDict['playerID'] = statLine.gameLaner.player.id
             playerDict['championID'] = statLine.gameLaner.champion.id
             playerDict['riotChampionName'] = statLine.gameLaner.champion.riotName
+            playerDict['championVersion'] = versionNumber
+            data.append(playerDict)
+
+        return JsonResponse(data={
+            'data': data
+        })
+
+
+class BlueTeamBanTable(DetailView):
+    model = Game
+
+    def get(self, request, *args, **kwargs):
+        data = []
+        self.object = self.get_object()
+        self.object: Game
+        enemyList = GameLaner.objects.filter(game__exact=self.object.id, blueTeam__exact=False)
+        gameBans = GameBan.objects.filter(game__exact=self.object.id, targetPlayer__in=[enemy.player for enemy in enemyList])
+        versionNumber = GlobalVars.getLoLVersion()
+
+        for ban in gameBans:
+            playerDict = {}
+            playerDict["playerName"] = ban.targetPlayer.playerName
+            playerDict['champion'] = ban.champion.championName
+            playerDict['playerID'] = ban.targetPlayer.id
+            playerDict['championID'] = ban.champion.id
+            playerDict['riotChampionName'] = ban.champion.riotName
+            playerDict['championVersion'] = versionNumber
+            data.append(playerDict)
+
+        return JsonResponse(data={
+            'data': data
+        })
+
+
+class RedTeamBanTable(DetailView):
+    model = Game
+
+    def get(self, request, *args, **kwargs):
+        data = []
+        self.object = self.get_object()
+        self.object: Game
+        enemyList = GameLaner.objects.filter(game__exact=self.object.id, blueTeam__exact=True)
+        gameBans = GameBan.objects.filter(game__exact=self.object.id, targetPlayer__in=[enemy.player for enemy in enemyList])
+        versionNumber = GlobalVars.getLoLVersion()
+
+        for ban in gameBans:
+            playerDict = {}
+            playerDict["playerName"] = ban.targetPlayer.playerName
+            playerDict['champion'] = ban.champion.championName
+            playerDict['playerID'] = ban.targetPlayer.id
+            playerDict['championID'] = ban.champion.id
+            playerDict['riotChampionName'] = ban.champion.riotName
             playerDict['championVersion'] = versionNumber
             data.append(playerDict)
 
@@ -1140,6 +1192,31 @@ class MostCSGameTable(View):
         })
 
 
+class MostCSFirstTwentyGameTable(View):
+    def get(self, request, *args, **kwargs):
+        data = []
+        players = Player.objects.all()
+
+        scores = [player.getHighestCSFirstTwentyGameLaneStats(None).getFirstTwentyCSRate() for player in players if player.getHighestCSFirstTwentyGameLaneStats(None) is not None]
+        names = [player.playerName for player in players]
+        gameIDs = [player.getHighestCSFirstTwentyGameLaneStats(None).gameLaner.game.id for player in players if player.getHighestCSFirstTwentyGameLaneStats(None) is not None]
+        playerIDs = [player.id for player in players]
+
+        leaderboard = sorted(zip(scores, names, gameIDs, playerIDs), reverse=True)[:3]
+        for line in leaderboard:
+            lineDict = {}
+            lineDict['name'] = line[1]
+            lineDict['cs'] = line[0]
+            lineDict['gameID'] = line[2]
+            lineDict['playerID'] = line[3]
+            lineDict['game'] = Game.objects.get(pk=line[2]).gameNumber
+            data.append(lineDict)
+
+        return JsonResponse(data={
+            'data': data
+        })
+
+
 class MostVisionGameTable(View):
     def get(self, request, *args, **kwargs):
         data = []
@@ -1183,6 +1260,53 @@ class MostControlWardGameTable(View):
             lineDict['gameID'] = line[2]
             lineDict['playerID'] = line[3]
             lineDict['game'] = Game.objects.get(pk=line[2]).gameNumber
+            data.append(lineDict)
+
+        return JsonResponse(data={
+            'data': data
+        })
+
+
+class MostBanGameTable(View):
+    def get(self, request, *args, **kwargs):
+        data = []
+        players = Player.objects.all()
+
+        scores = [player.getHighestBanGame(None)['bans'] for player in players if player.getHighestBanGame(None)['game.id'] is not None]
+        names = [player.playerName for player in players]
+        gameIDs = [player.getHighestBanGame(None)['game.id'] for player in players if player.getHighestBanGame(None)['game.id'] is not None]
+        playerIDs = [player.id for player in players]
+
+        leaderboard = sorted(zip(scores, names, gameIDs, playerIDs), reverse=True)[:3]
+        for line in leaderboard:
+            lineDict = {}
+            lineDict['name'] = line[1]
+            lineDict['ban'] = line[0]
+            lineDict['gameID'] = line[2]
+            lineDict['playerID'] = line[3]
+            lineDict['game'] = Game.objects.get(pk=line[2]).gameNumber
+            data.append(lineDict)
+
+        return JsonResponse(data={
+            'data': data
+        })
+
+
+class MostChampsTable(View):
+    def get(self, request, *args, **kwargs):
+        data = []
+        players = Player.objects.all()
+
+        scores = [player.getUniqueChampionCount() for player in players]
+        names = [player.playerName for player in players]
+        playerIDs = [player.id for player in players]
+
+        leaderboard = sorted(zip(scores, names, playerIDs), reverse=True)[:3]
+        for line in leaderboard:
+            lineDict = {}
+            lineDict['name'] = line[1]
+            lineDict['champions'] = line[0]
+            lineDict['playerID'] = line[2]
             data.append(lineDict)
 
         return JsonResponse(data={

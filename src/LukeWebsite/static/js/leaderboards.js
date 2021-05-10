@@ -131,7 +131,8 @@ $(function () {
                 },
 
                 {
-                    "data": "damage"
+                    "data": "damage",
+                    "render": $.fn.dataTable.render.number(',', '.')
                 },
                 {
                     "data": "game",
@@ -240,6 +241,46 @@ $(function () {
             ]
         });
 
+        var mostCSFirstTwentyGameTable = $('#mostCSFirstTwentyGameTable').DataTable({
+            "ajax": $('#mostCSFirstTwentyGameTable').data('url'),
+            "columns": [
+                {
+                    "data": "name",
+                    "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                        $(nTd).html("<a href='/ten_mans/player/" + oData.playerID + "'>" + sData + "</a>");
+                    }
+                },
+
+                {
+                    "data": "cs"
+                },
+                {
+                    "data": "game",
+                    "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                        $(nTd).html("<a href='/ten_mans/game/"+oData.gameID+"'>"+sData+"</a>");
+                    }
+                },
+                {
+                    "data": "gameID"
+                },
+                {
+                    "data": "playerID"
+                }
+            ],
+            columnDefs: [
+                {
+                    targets: [3, 4],
+                    visible: false
+                }
+            ],
+            paging: false,
+            searching: false,
+            info: false,
+            "order": [
+                [1, "desc"]
+            ]
+        });
+
         var mostVisionGameTable = $('#mostVisionGameTable').DataTable({
             "ajax": $('#mostVisionGameTable').data('url'),
             "columns": [
@@ -309,6 +350,77 @@ $(function () {
             columnDefs: [
                 {
                     targets: [3, 4],
+                    visible: false
+                }
+            ],
+            paging: false,
+            searching: false,
+            info: false,
+            "order": [
+                [1, "desc"]
+            ]
+        });
+
+        var mostBanGameTable = $('#mostBanGameTable').DataTable({
+            "ajax": $('#mostBanGameTable').data('url'),
+            "columns": [
+                {
+                    "data": "name",
+                    "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                        $(nTd).html("<a href='/ten_mans/player/" + oData.playerID + "'>" + sData + "</a>");
+                    }
+                },
+
+                {
+                    "data": "ban"
+                },
+                {
+                    "data": "game",
+                    "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                        $(nTd).html("<a href='/ten_mans/game/"+oData.gameID+"'>"+sData+"</a>");
+                    }
+                },
+                {
+                    "data": "gameID"
+                },
+                {
+                    "data": "playerID"
+                }
+            ],
+            columnDefs: [
+                {
+                    targets: [3, 4],
+                    visible: false
+                }
+            ],
+            paging: false,
+            searching: false,
+            info: false,
+            "order": [
+                [1, "desc"]
+            ]
+        });
+
+        var mostChampsTable = $('#mostChampsTable').DataTable({
+            "ajax": $('#mostChampsTable').data('url'),
+            "columns": [
+                {
+                    "data": "name",
+                    "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                        $(nTd).html("<a href='/ten_mans/player/" + oData.playerID + "'>" + sData + "</a>");
+                    }
+                },
+
+                {
+                    "data": "champions"
+                },
+                {
+                    "data": "playerID"
+                }
+            ],
+            columnDefs: [
+                {
+                    targets: [2],
                     visible: false
                 }
             ],
