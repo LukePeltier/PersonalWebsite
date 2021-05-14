@@ -54,7 +54,7 @@ django-crispy-forms==1.11.2
     # via -r requirements.in
 django-nose==1.4.7
     # via -r requirements.in
-django==3.2
+django==3.2.2
     # via
     #   -r requirements.in
     #   django-bootstrap-datepicker-plus
