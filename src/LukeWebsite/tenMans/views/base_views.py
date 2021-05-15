@@ -867,7 +867,7 @@ class MatchupGamesTable(View):
         statsLeft = GameLanerStats.objects.filter(gameLaner__in=gamesPlayedLeft)
         statsRight = GameLanerStats.objects.filter(gameLaner__in=gamesPlayedRight)
         versionNumber = GlobalVars.getLoLVersion()
-        for i in range(len(statsLeft)):
+        for i, item in enumerate(statsLeft):
             statLeft = statsLeft[i]
             statRight = statsRight[i]
             statLeft: GameLanerStats
@@ -987,7 +987,7 @@ class DuoGamesTable(View):
         statsLeft = GameLanerStats.objects.filter(gameLaner__in=gamesPlayedLeft)
         statsRight = GameLanerStats.objects.filter(gameLaner__in=gamesPlayedRight)
         versionNumber = GlobalVars.getLoLVersion()
-        for i in range(len(statsLeft)):
+        for i, item in enumerate(statsLeft):
             statLeft = statsLeft[i]
             statRight = statsRight[i]
             statLeft: GameLanerStats
