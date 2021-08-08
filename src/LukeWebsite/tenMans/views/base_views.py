@@ -10,7 +10,7 @@ from django.views.generic.detail import DetailView
 from django.views.generic.edit import FormView
 from django.views.generic.list import ListView
 from tenMans.extras.data import GlobalVars
-from tenMans.forms import (CreatePlayer, DuoForm, LaneMatchup, NewGameForm,
+from tenMans.forms import (CreatePlayer, DuoForm, LaneMatchup, NewGameForm, TeamBuilderForm,
                            UpdateAllGamesForm, UpdateGameForm)
 from tenMans.models import (Champion, Game, GameBan, GameLaner, GameLanerStats,
                             Lane, Leaderboard, Player)
@@ -1076,4 +1076,29 @@ class Leaderboards(TemplateView, BaseTenMansContextMixin):
         context = super().get_context_data(**kwargs)
         context['NonLifeTimeTables'] = Leaderboard.objects.filter(leaderboardIsLifetime__exact=0)
         context['LifeTimeTables'] = Leaderboard.objects.filter(leaderboardIsLifetime__exact=1)
+        return context
+
+
+class TeamBuilderView(FormView, BaseTenMansContextMixin):
+    template_name = 'tenMans/team_builder.html'
+    form_class = TeamBuilderForm
+
+    def get(self, request, *args, **kwargs):
+        self.show_results = False
+        self.playerTop, self.championTop, self.playerJungle, self.championJungle, self.playerMid, self.championMid, self.playerBot, self.championBot, self.playerSupport, self.championSupport = (None for i in range(10))
+        form = TeamBuilderForm(self.request.GET or None)
+        if form.is_valid():
+            self.show_results = True
+            self.player1 = form.cleaned_data['player1']
+            self.player2 = form.cleaned_data['player2']
+
+        return self.render_to_response(self.get_context_data(form=form))
+
+    def get_context_data(self, **kwargs):
+        context = super(TeamBuilderView, self).get_context_data(**kwargs)
+        context.update({
+            'show_results': self.show_results,
+            'player1': self.player1,
+            'player2': self.player2
+        })
         return context

@@ -763,3 +763,36 @@ class DuoForm(forms.Form):
         if cleaned_data['player1'] == cleaned_data['player2']:
             raise ValidationError('Cannot input same player twice')
         return cleaned_data
+
+
+class TeamBuilderForm(forms.Form):
+    player1 = forms.ModelChoiceField(label="Player", queryset=Player.objects.all().order_by('playerName'))
+    player2 = forms.ModelChoiceField(label="Player", queryset=Player.objects.all().order_by('playerName'))
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_id = 'id-teamBuilderForm'
+        self.helper.form_method = 'get'
+        self.helper.form_action = ''
+
+        self.helper.layout = Layout(
+            Fieldset(
+                'Players',
+                Row(
+                    Column('player1', css_class='col-12')
+                ),
+                Row(
+                    Column('player2', css_class='col-12')
+                ),
+            ),
+            ButtonHolder(
+                Submit('submit', 'Submit')
+            )
+        )
+
+    def clean(self):
+        cleaned_data = super().clean()
+        if cleaned_data['player1'] == cleaned_data['player2']:
+            raise ValidationError('Cannot input same player twice')
+        return cleaned_data
