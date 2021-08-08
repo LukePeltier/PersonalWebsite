@@ -766,6 +766,26 @@ class DuoForm(forms.Form):
 
 
 class TeamBuilderForm(forms.Form):
+    blueplayerTop = forms.ModelChoiceField(label="Player", queryset=Player.objects.all().order_by('playerName'))
+    bluechampionTop = forms.ModelChoiceField(label="Champion", queryset=Champion.objects.all().order_by('championName'))
+    blueplayerJungle = forms.ModelChoiceField(label="Player", queryset=Player.objects.all().order_by('playerName'))
+    bluechampionJungle = forms.ModelChoiceField(label="Champion", queryset=Champion.objects.all().order_by('championName'))
+    blueplayerMid = forms.ModelChoiceField(label="Player", queryset=Player.objects.all().order_by('playerName'))
+    bluechampionMid = forms.ModelChoiceField(label="Champion", queryset=Champion.objects.all().order_by('championName'))
+    blueplayerBot = forms.ModelChoiceField(label="Player", queryset=Player.objects.all().order_by('playerName'))
+    bluechampionBot = forms.ModelChoiceField(label="Champion", queryset=Champion.objects.all().order_by('championName'))
+    blueplayerSupport = forms.ModelChoiceField(label="Player", queryset=Player.objects.all().order_by('playerName'))
+    bluechampionSupport = forms.ModelChoiceField(label="Champion", queryset=Champion.objects.all().order_by('championName'))
+    redplayerTop = forms.ModelChoiceField(label="Player", queryset=Player.objects.all().order_by('playerName'))
+    redchampionTop = forms.ModelChoiceField(label="Champion", queryset=Champion.objects.all().order_by('championName'))
+    redplayerJungle = forms.ModelChoiceField(label="Player", queryset=Player.objects.all().order_by('playerName'))
+    redchampionJungle = forms.ModelChoiceField(label="Champion", queryset=Champion.objects.all().order_by('championName'))
+    redplayerMid = forms.ModelChoiceField(label="Player", queryset=Player.objects.all().order_by('playerName'))
+    redchampionMid = forms.ModelChoiceField(label="Champion", queryset=Champion.objects.all().order_by('championName'))
+    redplayerBot = forms.ModelChoiceField(label="Player", queryset=Player.objects.all().order_by('playerName'))
+    redchampionBot = forms.ModelChoiceField(label="Champion", queryset=Champion.objects.all().order_by('championName'))
+    redplayerSupport = forms.ModelChoiceField(label="Player", queryset=Player.objects.all().order_by('playerName'))
+    redchampionSupport = forms.ModelChoiceField(label="Champion", queryset=Champion.objects.all().order_by('championName'))
     player1 = forms.ModelChoiceField(label="Player", queryset=Player.objects.all().order_by('playerName'))
     player2 = forms.ModelChoiceField(label="Player", queryset=Player.objects.all().order_by('playerName'))
 
@@ -780,11 +800,53 @@ class TeamBuilderForm(forms.Form):
             Fieldset(
                 'Players',
                 Row(
-                    Column('player1', css_class='col-12')
-                ),
-                Row(
-                    Column('player2', css_class='col-12')
-                ),
+                    Column(
+                        Row(
+                            Column('blueplayerTop', css_class='col-6'),
+                            Column('bluechampionTop', css_class='col-6')
+                        ),
+                        Row(
+                            Column('blueplayerJungle', css_class='col-6'),
+                            Column('bluechampionJungle', css_class='col-6')
+                        ),
+                        Row(
+                            Column('blueplayerMid', css_class='col-6'),
+                            Column('bluechampionMid', css_class='col-6')
+                        ),
+                        Row(
+                            Column('blueplayerBot', css_class='col-6'),
+                            Column('bluechampionBot', css_class='col-6')
+                        ),
+                        Row(
+                            Column('blueplayerSupport', css_class='col-6'),
+                            Column('bluechampionSupport', css_class='col-6')
+                        ),
+                        css_class='col-6'
+                    ),
+                    Column(
+                        Row(
+                            Column('redplayerTop', css_class='col-6'),
+                            Column('redchampionTop', css_class='col-6')
+                        ),
+                        Row(
+                            Column('redplayerJungle', css_class='col-6'),
+                            Column('redchampionJungle', css_class='col-6')
+                        ),
+                        Row(
+                            Column('redplayerMid', css_class='col-6'),
+                            Column('redchampionMid', css_class='col-6')
+                        ),
+                        Row(
+                            Column('redplayerBot', css_class='col-6'),
+                            Column('redchampionBot', css_class='col-6')
+                        ),
+                        Row(
+                            Column('redplayerSupport', css_class='col-6'),
+                            Column('redchampionSupport', css_class='col-6')
+                        ),
+                        css_class='col-6'
+                    )
+                )
             ),
             ButtonHolder(
                 Submit('submit', 'Submit')

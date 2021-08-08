@@ -59,4 +59,5 @@ urlpatterns = [
     path('quadrakillsTable/', views.leaderboard_tables.QuadrakillsTable.as_view(), name='quadrakillsTable'),
     path('triplekillsTable/', views.leaderboard_tables.TriplekillsTable.as_view(), name='triplekillsTable'),
     path('doublekillsTable/', views.leaderboard_tables.DoublekillsTable.as_view(), name='doublekillsTable'),
+    path('teamBuilder/', views.base_views.TeamBuilderView.as_view(), name='teamBuilderView')
 ]

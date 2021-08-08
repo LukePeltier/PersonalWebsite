@@ -1085,12 +1085,30 @@ class TeamBuilderView(FormView, BaseTenMansContextMixin):
 
     def get(self, request, *args, **kwargs):
         self.show_results = False
-        self.playerTop, self.championTop, self.playerJungle, self.championJungle, self.playerMid, self.championMid, self.playerBot, self.championBot, self.playerSupport, self.championSupport = (None for i in range(10))
+        self.blueplayerTop, self.bluechampionTop, self.blueplayerJungle, self.bluechampionJungle, self.blueplayerMid, self.bluechampionMid, self.blueplayerBot, self.bluechampionBot, self.blueplayerSupport, self.bluechampionSupport, self.redplayerTop, self.redchampionTop, self.redplayerJungle, self.redchampionJungle, self.redplayerMid, self.redchampionMid, self.redplayerBot, self.redchampionBot, self.redplayerSupport, self.redchampionSupport = (None for i in range(20))
         form = TeamBuilderForm(self.request.GET or None)
         if form.is_valid():
             self.show_results = True
-            self.player1 = form.cleaned_data['player1']
-            self.player2 = form.cleaned_data['player2']
+            self.blueplayerTop = form.cleaned_data['blueplayerTop']
+            self.bluechampionTop = form.cleaned_data['bluechampionTop']
+            self.blueplayerJungle = form.cleaned_data['blueplayerJungle']
+            self.bluechampionJungle = form.cleaned_data['bluechampionJungle']
+            self.blueplayerMid = form.cleaned_data['blueplayerMid']
+            self.bluechampionMid = form.cleaned_data['bluechampionMid']
+            self.blueplayerBot = form.cleaned_data['blueplayerBot']
+            self.bluechampionBot = form.cleaned_data['bluechampionBot']
+            self.blueplayerSupport = form.cleaned_data['blueplayerSupport']
+            self.bluechampionSupport = form.cleaned_data['bluechampionSupport']
+            self.redplayerTop = form.cleaned_data['redplayerTop']
+            self.redchampionTop = form.cleaned_data['redchampionTop']
+            self.redplayerJungle = form.cleaned_data['redplayerJungle']
+            self.redchampionJungle = form.cleaned_data['redchampionJungle']
+            self.redplayerMid = form.cleaned_data['redplayerMid']
+            self.redchampionMid = form.cleaned_data['redchampionMid']
+            self.redplayerBot = form.cleaned_data['redplayerBot']
+            self.redchampionBot = form.cleaned_data['redchampionBot']
+            self.redplayerSupport = form.cleaned_data['redplayerSupport']
+            self.redchampionSupport = form.cleaned_data['redchampionSupport']
 
         return self.render_to_response(self.get_context_data(form=form))
 
@@ -1098,7 +1116,25 @@ class TeamBuilderView(FormView, BaseTenMansContextMixin):
         context = super(TeamBuilderView, self).get_context_data(**kwargs)
         context.update({
             'show_results': self.show_results,
-            'player1': self.player1,
-            'player2': self.player2
+            'blueplayerTop': self.blueplayerTop,
+            'bluechampionTop': self.bluechampionTop,
+            'blueplayerJungle': self.blueplayerJungle,
+            'bluechampionJungle': self.bluechampionJungle,
+            'blueplayerMid': self.blueplayerMid,
+            'bluechampionMid': self.bluechampionMid,
+            'blueplayerBot': self.blueplayerBot,
+            'bluechampionBot': self.bluechampionBot,
+            'blueplayerSupport': self.blueplayerSupport,
+            'bluechampionSupport': self.bluechampionSupport,
+            'redplayerTop': self.redplayerTop,
+            'redchampionTop': self.redchampionTop,
+            'redplayerJungle': self.redplayerJungle,
+            'redchampionJungle': self.redchampionJungle,
+            'redplayerMid': self.redplayerMid,
+            'redchampionMid': self.redchampionMid,
+            'redplayerBot': self.redplayerBot,
+            'redchampionBot': self.redchampionBot,
+            'redplayerSupport': self.redplayerSupport,
+            'redchampionSupport': self.redchampionSupport,
         })
         return context
