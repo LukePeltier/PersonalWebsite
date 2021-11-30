@@ -786,8 +786,6 @@ class TeamBuilderForm(forms.Form):
     redchampionBot = forms.ModelChoiceField(label="Champion", queryset=Champion.objects.all().order_by('championName'))
     redplayerSupport = forms.ModelChoiceField(label="Player", queryset=Player.objects.all().order_by('playerName'))
     redchampionSupport = forms.ModelChoiceField(label="Champion", queryset=Champion.objects.all().order_by('championName'))
-    player1 = forms.ModelChoiceField(label="Player", queryset=Player.objects.all().order_by('playerName'))
-    player2 = forms.ModelChoiceField(label="Player", queryset=Player.objects.all().order_by('playerName'))
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
