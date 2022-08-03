@@ -328,3 +328,6 @@ config.js
 conf
 
 cover/
+
+project.sublime-project
+project.sublime-workspace

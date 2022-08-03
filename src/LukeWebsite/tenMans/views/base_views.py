@@ -451,6 +451,7 @@ class GameDetailView(DetailView, BaseTenMansContextMixin):
             redTeamWinString = "Win"
         context['blueTeamWinString'] = blueTeamWinString
         context['redTeamWinString'] = redTeamWinString
+        context['tableIterator'] = range(2)
 
         if(self.get_object().gameMemeStatus):
             # get list of players involved
@@ -465,18 +466,12 @@ class GameDetailView(DetailView, BaseTenMansContextMixin):
         return context
 
 
-class BlueTeamTable(DetailView):
-    model = Game
-
-    def get(self, request, *args, **kwargs):
+class TeamTable():
+    @staticmethod
+    def populatePlayerDicts(stats, versionNumber):
         data = []
-        self.object = self.get_object()
-        self.object: Game
-        gameLaners = GameLaner.objects.filter(game__exact=self.object.id, blueTeam__exact=True)
-        stats = GameLanerStats.objects.filter(gameLaner__in=gameLaners)
-        versionNumber = GlobalVars.getLoLVersion()
-
         for statLine in stats:
+            statLine: GameLanerStats
             playerDict = {}
             playerDict["playerName"] = statLine.gameLaner.player.playerName
             playerDict['champion'] = statLine.gameLaner.champion.championName
@@ -500,6 +495,16 @@ class BlueTeamTable(DetailView):
             playerDict['cs'] = statLine.laneMinionsKilled + statLine.neutralMinionsKilled
             playerDict['teamJungleMinionsKilled'] = statLine.teamJungleMinionsKilled
             playerDict['enemyJungleMinionsKilled'] = statLine.enemyJungleMinionsKilled
+            playerDict['baronKills'] = statLine.baronKills
+            playerDict['dragonKills'] = statLine.dragonKills
+            playerDict['goldSpent'] = statLine.goldSpent
+            playerDict['killedNexus'] = statLine.killedNexus
+            playerDict['largestCrit'] = statLine.largestCriticalStrike
+            playerDict['longestTimeAlive'] = str(datetime.timedelta(seconds=statLine.longestTimeSpentLiving))
+            playerDict['timesFlashed'] = statLine.numberOfFlashes
+            playerDict['objectivesStolen'] = statLine.objectivesStolen
+            playerDict['timeAlive'] = str(datetime.timedelta(seconds=statLine.timePlayed - statLine.totalTimeSpentDead))
+            playerDict['timeDead'] = str(datetime.timedelta(seconds=statLine.totalTimeSpentDead))
             playerDict['controlWardsPurchased'] = statLine.controlWardsPurchased
             playerDict['firstBlood'] = statLine.firstBlood
             playerDict['firstTower'] = statLine.firstTower
@@ -517,50 +522,43 @@ class BlueTeamTable(DetailView):
         })
 
 
+class BlueTeamTable(DetailView):
+    model = Game
+
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        self.object: Game
+        gameLaners = GameLaner.objects.filter(game__exact=self.object.id, blueTeam__exact=True)
+        stats = GameLanerStats.objects.filter(gameLaner__in=gameLaners)
+        versionNumber = GlobalVars.getLoLVersion()
+
+        return TeamTable.populatePlayerDicts(stats, versionNumber)
+
+
 class RedTeamTable(DetailView):
     model = Game
 
     def get(self, request, *args, **kwargs):
-        data = []
         self.object = self.get_object()
         self.object: Game
         gameLaners = GameLaner.objects.filter(game__exact=self.object.id, blueTeam__exact=False)
         stats = GameLanerStats.objects.filter(gameLaner__in=gameLaners)
         versionNumber = GlobalVars.getLoLVersion()
 
-        for statLine in stats:
+        return TeamTable.populatePlayerDicts(stats, versionNumber)
+
+
+class BanTable():
+    @staticmethod
+    def populateBanDicts(gameBans, versionNumber):
+        data = []
+        for ban in gameBans:
             playerDict = {}
-            playerDict["playerName"] = statLine.gameLaner.player.playerName
-            playerDict['champion'] = statLine.gameLaner.champion.championName
-            playerDict['lane'] = statLine.gameLaner.lane.laneName
-            playerDict['kills'] = statLine.kills
-            playerDict['deaths'] = statLine.deaths
-            playerDict['assists'] = statLine.assists
-            playerDict['largestKillingSpree'] = statLine.largestKillingSpree
-            playerDict['largestMultiKill'] = statLine.largestMultiKill
-            playerDict['doubleKills'] = statLine.doubleKills
-            playerDict['tripleKills'] = statLine.tripleKills
-            playerDict['quadraKills'] = statLine.quadraKills
-            playerDict['pentaKills'] = statLine.pentaKills
-            playerDict['totalDamageDealtToChampions'] = statLine.totalDamageDealtToChampions
-            playerDict['visionScore'] = statLine.visionScore
-            playerDict['crowdControlScore'] = statLine.crowdControlScore
-            playerDict['totalDamageTaken'] = statLine.totalDamageTaken
-            playerDict['goldEarned'] = statLine.goldEarned
-            playerDict['turretKills'] = statLine.turretKills
-            playerDict['inhibitorKills'] = statLine.inhibitorKills
-            playerDict['cs'] = statLine.laneMinionsKilled + statLine.neutralMinionsKilled
-            playerDict['teamJungleMinionsKilled'] = statLine.teamJungleMinionsKilled
-            playerDict['enemyJungleMinionsKilled'] = statLine.enemyJungleMinionsKilled
-            playerDict['controlWardsPurchased'] = statLine.controlWardsPurchased
-            playerDict['firstBlood'] = statLine.firstBlood
-            playerDict['firstTower'] = statLine.firstTower
-            playerDict['csRateFirstTen'] = statLine.csRateFirstTen
-            playerDict['csRateSecondTen'] = (statLine.csRateSecondTen + statLine.csRateFirstTen) / 2
-            playerDict["draftOrder"] = statLine.gameLaner.getDraftString()
-            playerDict['playerID'] = statLine.gameLaner.player.id
-            playerDict['championID'] = statLine.gameLaner.champion.id
-            playerDict['riotChampionName'] = statLine.gameLaner.champion.riotName
+            playerDict["playerName"] = ban.targetPlayer.playerName
+            playerDict['champion'] = ban.champion.championName
+            playerDict['playerID'] = ban.targetPlayer.id
+            playerDict['championID'] = ban.champion.id
+            playerDict['riotChampionName'] = ban.champion.riotName
             playerDict['championVersion'] = versionNumber
             data.append(playerDict)
 
@@ -573,52 +571,26 @@ class BlueTeamBanTable(DetailView):
     model = Game
 
     def get(self, request, *args, **kwargs):
-        data = []
         self.object = self.get_object()
         self.object: Game
         enemyList = GameLaner.objects.filter(game__exact=self.object.id, blueTeam__exact=False)
         gameBans = GameBan.objects.filter(game__exact=self.object.id, targetPlayer__in=[enemy.player for enemy in enemyList])
         versionNumber = GlobalVars.getLoLVersion()
 
-        for ban in gameBans:
-            playerDict = {}
-            playerDict["playerName"] = ban.targetPlayer.playerName
-            playerDict['champion'] = ban.champion.championName
-            playerDict['playerID'] = ban.targetPlayer.id
-            playerDict['championID'] = ban.champion.id
-            playerDict['riotChampionName'] = ban.champion.riotName
-            playerDict['championVersion'] = versionNumber
-            data.append(playerDict)
-
-        return JsonResponse(data={
-            'data': data
-        })
+        return BanTable.populateBanDicts(gameBans, versionNumber)
 
 
 class RedTeamBanTable(DetailView):
     model = Game
 
     def get(self, request, *args, **kwargs):
-        data = []
         self.object = self.get_object()
         self.object: Game
         enemyList = GameLaner.objects.filter(game__exact=self.object.id, blueTeam__exact=True)
         gameBans = GameBan.objects.filter(game__exact=self.object.id, targetPlayer__in=[enemy.player for enemy in enemyList])
         versionNumber = GlobalVars.getLoLVersion()
 
-        for ban in gameBans:
-            playerDict = {}
-            playerDict["playerName"] = ban.targetPlayer.playerName
-            playerDict['champion'] = ban.champion.championName
-            playerDict['playerID'] = ban.targetPlayer.id
-            playerDict['championID'] = ban.champion.id
-            playerDict['riotChampionName'] = ban.champion.riotName
-            playerDict['championVersion'] = versionNumber
-            data.append(playerDict)
-
-        return JsonResponse(data={
-            'data': data
-        })
+        return BanTable.populateBanDicts(gameBans, versionNumber)
 
 
 class ChampionListView(ListView, BaseTenMansContextMixin):
