@@ -32,3 +32,4 @@ factory-boy
 selenium
 crispy-bootstrap5
 pytest-xdist
+python-dotenv
