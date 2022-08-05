@@ -5,3 +5,8 @@ from django.shortcuts import render
 def index(request):
     context = {}
     return render(request, 'homepagePortfolio/index.html', context)
+
+
+def hello_webpack(request):
+    context = {}
+    return render(request, 'homepagePortfolio/hello_webpack.html', context)
