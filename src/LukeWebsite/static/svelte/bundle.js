@@ -341,6 +341,7 @@ var app = (function () {
 
     function create_fragment(ctx) {
     	let main;
+    	let div;
     	let h1;
     	let t0;
     	let t1;
@@ -354,6 +355,7 @@ var app = (function () {
     	const block = {
     		c: function create() {
     			main = element("main");
+    			div = element("div");
     			h1 = element("h1");
     			t0 = text("Hello ");
     			t1 = text(/*name*/ ctx[0]);
@@ -364,25 +366,28 @@ var app = (function () {
     			a = element("a");
     			a.textContent = "Svelte tutorial";
     			t6 = text(" to learn how to build Svelte apps.");
-    			attr_dev(h1, "class", "svelte-1tky8bj");
-    			add_location(h1, file, 5, 1, 65);
+    			attr_dev(h1, "class", "svelte-1gqwiq3");
+    			add_location(h1, file, 5, 2, 81);
     			attr_dev(a, "href", "https://svelte.dev/tutorial");
-    			add_location(a, file, 6, 14, 103);
-    			add_location(p, file, 6, 1, 90);
-    			attr_dev(main, "class", "bg-red-900 svelte-1tky8bj");
-    			add_location(main, file, 4, 0, 38);
+    			add_location(a, file, 6, 15, 119);
+    			add_location(p, file, 6, 2, 106);
+    			attr_dev(div, "class", "bg-red-900");
+    			add_location(div, file, 4, 1, 54);
+    			attr_dev(main, "class", "svelte-1gqwiq3");
+    			add_location(main, file, 3, 0, 46);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, main, anchor);
-    			append_dev(main, h1);
+    			append_dev(main, div);
+    			append_dev(div, h1);
     			append_dev(h1, t0);
     			append_dev(h1, t1);
     			append_dev(h1, t2);
-    			append_dev(main, t3);
-    			append_dev(main, p);
+    			append_dev(div, t3);
+    			append_dev(div, p);
     			append_dev(p, t4);
     			append_dev(p, a);
     			append_dev(p, t6);
@@ -465,10 +470,10 @@ var app = (function () {
     }
 
     const app = new App({
-    	target: document.body,
-    	props: {
-    		name: 'world'
-    	}
+        target: document.body,
+        props: {
+            name: 'world'
+        }
     });
 
     return app;
