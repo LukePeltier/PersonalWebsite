@@ -1,0 +1,20 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width,initial-scale=1'>
+
+    <title>Svelte app</title>
+
+    <link rel='icon' type='image/png' href="{% static 'svelte/favicon.png' %}"> <!-- <-- here -->
+    <link rel='stylesheet' href="{% static 'svelte/global.css' %}"> <!-- <-- here -->
+    <link rel='stylesheet' href="{% static 'svelte/bundle.css' %}"> <!-- <-- here -->
+
+    <script defer src="{% static 'svelte/bundle.js' %}"></script> <!-- <-- here -->
+</head>
+
+<body>
+</body>
+</html>

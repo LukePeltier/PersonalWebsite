@@ -1054,6 +1054,11 @@ class CurrentSeason(View):
         })
 
 
+class SvelteTest(TemplateView):
+
+    template_name = "tenMans/test_svelte.html"
+
+
 class Tournaments(View):
 
     def post(self, request, *args, **kwargs):
