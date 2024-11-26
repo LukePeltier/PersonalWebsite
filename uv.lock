@@ -462,11 +462,11 @@ wheels = [
 
 [[package]]
 name = "idna"
-version = "3.3"
+version = "3.7"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/62/08/e3fc7c8161090f742f504f40b1bccbfc544d4a4e09eb774bf40aafce5436/idna-3.3.tar.gz", hash = "sha256:9d643ff0a55b762d5cdb124b8eaa99c66322e2157b69160bc32796e824360e6d", size = 286689 }
+sdist = { url = "https://files.pythonhosted.org/packages/21/ed/f86a79a07470cb07819390452f178b3bef1d375f2ec021ecfc709fc7cf07/idna-3.7.tar.gz", hash = "sha256:028ff3aadf0609c1fd278d8ea3089299412a7a8b9bd005dd08b9f8285bcb5cfc", size = 189575 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/04/a2/d918dcd22354d8958fe113e1a3630137e0fc8b44859ade3063982eacd2a4/idna-3.3-py3-none-any.whl", hash = "sha256:84d9dd047ffa80596e0f246e2eab0b391788b0503584e8945f2368256d2735ff", size = 61160 },
+    { url = "https://files.pythonhosted.org/packages/e5/3e/741d8c82801c347547f8a2a06aa57dbb1992be9e948df2ea0eda2c8b79e8/idna-3.7-py3-none-any.whl", hash = "sha256:82fee1fc78add43492d3a1898bfa6d8a904cc97d8427f683ed8e798d07761aa0", size = 66836 },
 ]
 
 [[package]]
@@ -642,7 +642,7 @@ requires-dist = [
     { name = "gunicorn", specifier = "==20.1.0" },
     { name = "gviz-api", specifier = "==1.10.0" },
     { name = "h11", specifier = "==0.13.0" },
-    { name = "idna", specifier = "==3.3" },
+    { name = "idna", specifier = "==3.7" },
     { name = "iniconfig", specifier = "==1.1.1" },
     { name = "isort", specifier = "==5.10.1" },
     { name = "lazy-object-proxy", specifier = "==1.7.1" },
