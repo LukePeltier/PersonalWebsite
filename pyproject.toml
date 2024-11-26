@@ -1,7 +1,7 @@
 [project]
 name = "lukewebsite"
-version = "0.1.0"
-description = "Add your description here"
+version = "1.0.0"
+description = "Portfolio Website"
 readme = "README.md"
 requires-python = ">=3.9"
 dependencies = [
