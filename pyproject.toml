@@ -52,7 +52,7 @@ dependencies = [
     "packaging==21.3",
     "pathspec==0.9.0",
     "pep517==0.13.0",
-    "pillow==9.2.0",
+    "pillow==10.3.0",
     "pip-tools==6.8.0",
     "pipdeptree==2.2.1",
     "platformdirs==2.5.2",
