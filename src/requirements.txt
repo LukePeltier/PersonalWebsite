@@ -29,7 +29,7 @@ build==0.8.0
     # via pip-tools
 cassiopeia==5.0.1
     # via django-cassiopeia
-certifi==2022.6.15
+certifi==2024.7.4
     # via
     #   requests
     #   urllib3
