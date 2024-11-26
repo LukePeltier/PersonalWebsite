@@ -45,7 +45,7 @@ coverage[toml]==6.4.3
     #   pytest-cov
 crispy-bootstrap5==0.6
     # via -r requirements.in
-cryptography==37.0.4
+cryptography==43.0.1
     # via
     #   pyopenssl
     #   urllib3
