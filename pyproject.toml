@@ -7,7 +7,7 @@ requires-python = ">=3.9"
 dependencies = [
     "appdirs==1.4.4",
     "arrow==0.17.0",
-    "asgiref==3.5.2",
+    "asgiref==3.6.0",
     "astroid==2.11.7",
     "async-generator==1.10",
     "attrs==22.1.0",
