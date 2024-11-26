@@ -688,7 +688,7 @@ requires-dist = [
     { name = "six", specifier = "==1.16.0" },
     { name = "sniffio", specifier = "==1.2.0" },
     { name = "sortedcontainers", specifier = "==2.4.0" },
-    { name = "sqlparse", specifier = "==0.4.2" },
+    { name = "sqlparse", specifier = "==0.5.0" },
     { name = "tenacity", specifier = "==8.0.1" },
     { name = "toml", specifier = "==0.10.2" },
     { name = "tomli", specifier = "==2.0.1" },
@@ -1260,11 +1260,11 @@ wheels = [
 
 [[package]]
 name = "sqlparse"
-version = "0.4.2"
+version = "0.5.0"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/32/fe/8a8575debfd924c8160295686a7ea661107fc34d831429cce212b6442edb/sqlparse-0.4.2.tar.gz", hash = "sha256:0c00730c74263a94e5a9919ade150dfc3b19c574389985446148402998287dae", size = 67771 }
+sdist = { url = "https://files.pythonhosted.org/packages/50/26/5da251cd090ccd580f5cfaa7d36cdd8b2471e49fffce60ed520afc27f4bc/sqlparse-0.5.0.tar.gz", hash = "sha256:714d0a4932c059d16189f58ef5411ec2287a4360f17cdd0edd2d09d4c5087c93", size = 83475 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/05/40/d836d55fb3f467243ee839ab7b814822fda522cd395fa41e282684e71ee5/sqlparse-0.4.2-py3-none-any.whl", hash = "sha256:48719e356bb8b42991bdbb1e8b83223757b93789c00910a616a071910ca4a64d", size = 42309 },
+    { url = "https://files.pythonhosted.org/packages/43/5d/a0fdd88fd486b39ae1fd1a75ff75b4e29a0df96c0304d462fd407b82efe0/sqlparse-0.5.0-py3-none-any.whl", hash = "sha256:c204494cd97479d0e39f28c93d46c0b2d5959c7b9ab904762ea6c7af211c8663", size = 43971 },
 ]
 
 [[package]]
