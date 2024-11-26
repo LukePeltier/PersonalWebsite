@@ -23,7 +23,7 @@ dependencies = [
     "cryptography==37.0.4",
     "datapipelines==1.0.7",
     "dill==0.3.5.1",
-    "django==4.1",
+    "django==4.2.16",
     "django-bootstrap-datepicker-plus==4.0.0",
     "django-bootstrap5==22.1",
     "django-cassiopeia==2.1.1",
